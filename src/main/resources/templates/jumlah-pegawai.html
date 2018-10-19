@@ -11,25 +11,25 @@
 
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
-	<h2>Lihat Semua Jabatan</h2>
+	
 	<div class="table-responsive">
   	<table class="table">
     	<thead>
       		<tr>
-        		<th scope="col">Nama</th>
-        		<th scope="col">Deskripsi</th>
-        		<th scope="col">Gaji Pokok</th>
+        		<th scope="col">Jabatan</th>
+        		<th scope="col">Total</th>
       		</tr>
     	</thead>
 	<tbody>
-		<tr th:each="jabatan : ${jabatan}">
-			<td th:text="${jabatan.nama}"></td>
-			<td th:text="${jabatan.deskripsi}"></td>
-			<td th:text="${jabatan.gaji_pokok}"></td>
+		<tr th:each="jumlahPegawai : ${jumlahPegawai}">
+			<td th:text="${jumlahPegawai.key.nama}"></td>
+			<td th:text="${jumlahPegawai.value}"></td>
 		</tr>	
 	</tbody>
 	</table>
 	</div>
+	
 	<td><a th:href="@{/}">Kembali</a></td>
 </body>
+
 </html>

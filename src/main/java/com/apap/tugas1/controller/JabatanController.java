@@ -1,6 +1,8 @@
 package com.apap.tugas1.controller;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -75,6 +77,16 @@ public class JabatanController {
 		List<JabatanModel> listAll = jabatanService.getAllDetailJabatan();
 		model.addAttribute("jabatan", listAll);
 		return "view-all";
+	}
+	
+	@RequestMapping(value = "/jabatan/viewJumlahPegawai", method = RequestMethod.GET)
+	private String viewJumlahPegawai(Model model) {
+		Map<JabatanModel, Integer> jumlahPegawai = new HashMap<>();
+		for(JabatanModel jabatan : jabatanService.getAllDetailJabatan()) {
+			jumlahPegawai.put(jabatan, jabatan.getPegawaiJabatan().size());
+		}
+		model.addAttribute("jumlahPegawai", jumlahPegawai);
+		return "jumlah-pegawai";
 	}
 
 }
