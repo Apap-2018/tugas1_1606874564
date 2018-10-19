@@ -36,4 +36,5 @@ public class PegawaiServiceImpl implements PegawaiService {
 		return pegawaiDb.findByNip(nip);
 	}
 
+
 }

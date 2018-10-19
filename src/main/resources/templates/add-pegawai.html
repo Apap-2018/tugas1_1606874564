@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<object th:include="fragments/fragment :: title" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div id="Content" class="container-full-bg">
+    <div class="container vertical-center" style="padding-top: 32px;">
+        <h1 th:text="'Tambah Pegawai'"></h1>
+        <div class="card my-5">
+        	<div class="container">
+        		<form th:action="@{/pegawai/tambah}" th:object="${pegawai}" method="POST" style="padding-top:15px">
+            	<div class="form-group">
+            		<label for="nama">Nama :</label>
+            		<input type="text" name="nama" class="form-control">
+            	</div>
+            	<div class="form-group">
+            		<label for="tempat_lahir">Tempat Lahir :</label>
+            		<input type="text" name="tempat_lahir" class="form-control">
+            	</div>
+            	<div class="form-group">
+            		<label for="tanggal_lahir">Tanggal Lahir :</label>
+            		<input type="date" name="tanggal_lahir" class="form-control">
+            	</div>
+            	<div class="form-group">
+            		<label for="tahun_masuk">Tahun Masuk :</label>
+            		<input type="text" name="tahun_masuk" class="form-control">
+            	</div>
+            	<div class="form-group">
+            		<label for="provinsi">Provinsi :</label>
+            		<select class="form-control" id="provinsi">
+            		  <option disabled="disabled" selected="selected" >Pilih Provinsi</option>
+					  <option th:each="provinsi : ${provinsiList}" 
+					          th:value="${provinsi.id}" 
+					          th:text="${provinsi.nama}"></option>
+					</select>
+            	</div>
+            	<div class="form-group">
+            		<label for="instansi">Instansi :</label>
+            		<select class="form-control" id="instansi" name="instansi">
+					  <option disabled="disabled" selected="selected" >Pilih Instansi</option>
+					</select>
+            	</div>
+            	
+            	<div class="form-group">
+            		<label for="jabatan">Jabatan:</label>
+            		<div th:each="jabatan, iterationStats : *{jabatan}" style="padding:10px">
+            			<select class="form-control" th:field="*{jabatan[__${iterationStats.index}__]}" >
+					  		<option th:each="jabatan : ${jabatan}" th:value="${jabatan.id}" th:text="${jabatan.nama}" ></option>
+						</select>
+						
+            		</div>
+            		<button type="submit" name="addRow" class="btn">Tambah Jabatan Lainnya</button>
+            		
+            	</div>
+            	
+            	
+            	<div class="card-body">
+                	<input type="submit" name="submit" class="btn btn-primary"  value="Tambah">
+            	</div>
+            </form>
+        	</div>
+            
+            
+        </div>
+    </div>
+     <script type="text/javascript">
+	$(document).ready(function(){
+		console.log("hey")
+		$('#provinsi').change(function() {
+			valueProv = $(this).val();
+			console.log(valueProv)
+			$.ajax({
+				type: "GET",
+				url: "http://localhost:8080/pegawai/tambah/instansi?provinsi=",
+				data: {
+					'provinsiId' : valueProv
+				},
+				dataType: 'json',
+				success: function(data) {
+					console.log(data);
+					getIns = '';
+					var size = data.length;
+				
+					for (var i = 0; i<size; i++) {
+						getIns+='<option value="'+data[i].id+'">'+data[i].nama+'</option>';
+						console.log(data[i]);
+						console.log(data[i].nama)
+					}
+					console.log(getIns);
+					$('#instansi').append(getIns);
+				},
+				error: function(rs,e) {
+					alert(rs.responseText)
+				}
+			})
+		})
+	});
+</script>
+</div>
+
+</body>
+</html>

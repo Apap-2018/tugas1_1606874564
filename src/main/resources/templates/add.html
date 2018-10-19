@@ -11,7 +11,7 @@
 
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
-	<h2>Data Berhasil Ditambahkan</h2>
+	<h2 th:text="'Pegawai dengan NIP ' + ${nip} + ' berhasil ditambahkan'" ></h2>
 	<a th:href="@{/}">Kembali</a>
 </body>
 

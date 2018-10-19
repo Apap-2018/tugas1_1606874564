@@ -17,7 +17,6 @@ public class JabatanServiceImpl implements JabatanService{
 	@Override
 	public void addJabatan(JabatanModel jabatan) {
 		jabatanDb.save(jabatan);
-		
 	}
 
 	@Override
