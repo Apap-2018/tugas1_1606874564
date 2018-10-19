@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<object th:include="fragments/fragment :: title" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div id="Content" class="container-full-bg">
+    <div class="container vertical-center" style="padding-top: 32px;">
+    	<div class="row">
+    		<div class="col-sm-6">
+    			<h1>Data Pegawai Termuda</h1>
+    			        <div class="card my-5">
+				            <table class="table">
+				                <tbody>
+				                    <tr>
+				                        <th scope="row">NIP</th>
+				                        <td th:text="${termuda.nip}"></td>
+				                    </tr>
+				                    <tr>
+				                        <th scope="row">Nama</th>
+				                        <td th:text="${termuda.nama}"></td>
+				                    </tr>
+				                    <tr>
+				                        <th scope="row">Tempat Lahir</th>
+				                        <td th:text="${termuda.tempat_lahir}"></td>
+				                    </tr>
+				                    <tr>
+				                        <th scope="row">Tanggal Lahir</th>
+				                        <td th:text="${termuda.tanggal_lahir}"></td>
+				                    </tr>
+				                    <tr>
+				                        <th scope="row">Tahun Masuk</th>
+				                        <td th:text="${termuda.tahun_masuk}"></td>
+				                    </tr>
+				                     <tr>
+				                        <th scope="row">Nama Instansi</th>
+				                        <td th:text="${termuda.instansi.nama}+' '+${termuda.instansi.provinsi.nama}"></td>
+				                    </tr>
+				                    <tr>
+				                        <th scope="row">Jabatan</th>
+				                        <td>
+				                            <ul>
+				                                <li th:each="jabatan : ${termuda.listOfJabatan}">
+				                                    <div th:text="${jabatan.nama}"></div>
+				                                </li>
+				                            </ul>
+				                        </td>
+				                    </tr>
+				                    
+				                </tbody>
+				            </table>
+				        </div>
+    		</div>
+    		
+    		<div class="col-sm-6">
+    			<h1>Data Pegawai Tertua</h1>
+    			        <div class="card my-5">
+				            <table class="table">
+				                <tbody>
+				                    <tr>
+				                        <th scope="row">NIP</th>
+				                        <td th:text="${tertua.nip}"></td>
+				                    </tr>
+				                    <tr>
+				                        <th scope="row">Nama</th>
+				                        <td th:text="${tertua.nama}"></td>
+				                    </tr>
+				                    <tr>
+				                        <th scope="row">Tempat Lahir</th>
+				                        <td th:text="${tertua.tempat_lahir}"></td>
+				                    </tr>
+				                    <tr>
+				                        <th scope="row">Tanggal Lahir</th>
+				                        <td th:text="${tertua.tanggal_lahir}"></td>
+				                    </tr>
+				                    <tr>
+				                        <th scope="row">Tahun Masuk</th>
+				                        <td th:text="${tertua.tahun_masuk}"></td>
+				                    </tr>
+				                     <tr>
+				                        <th scope="row">Nama Instansi</th>
+				                        <td th:text="${tertua.instansi.nama}+' '+${tertua.instansi.provinsi.nama}"></td>
+				                    </tr>
+				                    <tr>
+				                        <th scope="row">Jabatan</th>
+				                        <td>
+				                            <ul>
+				                                <li th:each="jabatan : ${tertua.listOfJabatan}">
+				                                    <div th:text="${jabatan.nama}"></div>
+				                                </li>
+				                            </ul>
+				                        </td>
+				                    </tr>
+				                    
+				                </tbody>
+				            </table>
+				        </div>
+    		</div>
+    		
+    		
+    	</div>
+
+    </div>
+</div>
+</body>
+</html>

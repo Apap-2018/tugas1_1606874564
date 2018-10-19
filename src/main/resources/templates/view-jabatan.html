@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<object th:include="fragments/fragment :: title" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+	
+	<h3 th:text="'Detail Jabatan ' + ${jabatan.nama}"></h3>
+	<p th:text= "'Nama: ' + ${jabatan.nama}"></p>
+	<p th:text= "'Deskripsi: ' + ${jabatan.deskripsi}"></p>
+	<p th:text= "'Gaji Pokok: ' + ${jabatan.gaji_pokok}"></p>
+	
+	<div class="card-body">
+        <div style="float:left; clear:none; margin-right: 10px">
+         	<a th:href="@{/jabatan/ubah}+'?idJabatan='+${jabatan.getId()}" class="btn btn-primary">Ubah</a>
+         	<a th:href="@{/jabatan/hapus}+'?idJabatan='+${jabatan.getId()}" class="btn btn-primary">Hapus</a>
+        </div>
+    </div>
+    
+</body>
+
+</html>

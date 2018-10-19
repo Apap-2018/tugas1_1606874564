@@ -1,0 +1,83 @@
+<!DOCTYYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<object th:include="fragments/fragment :: title" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+
+<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+	<div class="container-fluid">
+		<h3>Sistem Informasi Kepegawaian</h3>
+		<h4>Selamat datang di Sistem Informasi Kepegawaian</h4>
+		<br>
+		<h2>Lihat Data Pegawai berdasarkan NIP</h2>
+		<h4>Masukkan Nomor Induk Pegawai</h4>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card">
+					<form th:action="@{/pegawai}" method="GET">
+						<div class="card-body">
+							<label for="nip">NIP Pegawai : </label>
+							<br>
+							<input type="text" name="nip" class="form-control" />
+							<br>
+							<button type="submit" class="btn btn-primary">Lihat</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		<br>
+		
+		<h2>Lihat Detail Jabatan</h2>
+		<h4>Pilih Jabatan</h4>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card">
+					<form th:action="@{/jabatan/view}" method="GET">
+						<div class="card-body">
+							<div class="form-group blu-margin">
+    							<select class="form-control" id="idJabatan" name="idJabatan">
+        							<option value="" th:field="*{jabatan}"></option>
+        							<option th:each="jabatan : ${jabatan}" th:value="${jabatan.id}" th:text="${jabatan.nama}"></option>
+    							</select>
+							</div>
+							<br>
+							<button type="submit" class="btn btn-primary">Lihat</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		<h2>Lihat Pegawai Termuda dan Tertua</h2>
+		<h4>Pilih Instansi</h4>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card">
+					<form th:action="@{/pegawai/termuda-tertua}" method="GET">
+						<div class="card-body">
+							<div class="form-group blu-margin">
+    							<select class="form-control" id="idInstansi" name="idInstansi">
+        							<option value="" th:field="*{instansi}"></option>
+        							<option th:each="instansi : ${instansi}" th:value="${instansi.id}" th:text="${instansi.nama}"></option>
+    							</select>
+							</div>
+							<br>
+							<button type="submit" class="btn btn-primary">Lihat</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		<br>
+	</div>
+</body>
+</html>
