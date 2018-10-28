@@ -6,9 +6,6 @@
 	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
 	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
 	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-	<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
-	<script th:src="@{/js/bootstrap.min.js}"></script>
-	<script th:src="@{/js/popper.min.js}"></script>
 </head>
 
 <body>
@@ -20,25 +17,25 @@
 				<tr style="margin-top:10px">
 					<td>Nama</td>
 					<td></td>
-					<td><input type="text" name="nama" maxlength="255" class="form-control" required="required" /></td>
+					<td><input type="text" name="nama" maxlength="255" class="form-control" required="required" th:value="*{nama}"/></td>
 				</tr>
 				
 				<tr style="margin-top:10px">
 					<td>Tempat Lahir</td>
 					<td></td>
-					<td><input type="text" name="tempat_lahir" maxlength="255" class="form-control" required="required" /></td>
+					<td><input type="text" name="tempat_lahir" maxlength="255" class="form-control" required="required" th:value="*{tempat_lahir}"/></td>
 				</tr>
 				
 				<tr style="margin-top:10px">
 					<td>Tanggal Lahir</td>
 					<td></td>
-					<td><input type="date" name="tanggal_lahir" maxlength="255" class="form-control" required="required" /></td>
+					<td><input type="date" name="tanggal_lahir" maxlength="255" class="form-control" required="required" th:value="*{tanggal_lahir}"/></td>
 				</tr>
 				
 				<tr style="margin-top:10px">
 					<td>Tahun Masuk</td>
 					<td></td>
-					<td><input type="number" name="tahun_masuk" maxlength="255" class="form-control" required="required" /></td>
+					<td><input type="number" name="tahun_masuk" maxlength="2018" class="form-control" required="required" th:value="*{tahun_masuk}"/></td>
 				</tr>
 				
 				<tr style="margin-top:10px">
@@ -57,10 +54,22 @@
     					<option disabled="disabled" selected="selected">Pilih Instansi</option>
     				</select></td>
 				</tr>
+				
+				<tr th:each="jabatan, iterationStat : *{listOfJabatan}">
+				 	<td th:text="'Jabatan ' + ${iterationStat.count}"></td>
+				 	<td></td>
+				 	<td>						
+						<select class="form-control" th:field="*{listOfJabatan[__${iterationStat.index}__]}">
+							<option th:each="jabatan : ${listOfJabatan}" th:value="${jabatan.id}" th:text="${jabatan.nama}"></option>
+						</select>
+						<button type="submit" class="btn btn-link" name="addRow">Tambah Jabatan Lainnya</button>
+					</td>
+				</tr>	
+				
 			
 			</table>
 			<br>
-			<button type="submit" class="btn btn-primary">Simpan</button>
+			<button type="submit" name="save" class="btn btn-primary">Simpan</button>
 			<a th:href="@{/}"><button type="submit" class="btn btn-default">Kembali</button></a>
 		</form>
 		

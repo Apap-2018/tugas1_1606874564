@@ -28,14 +28,14 @@ public class JabatanController {
 	@RequestMapping(value = "/jabatan/tambah", method = RequestMethod.GET)
 	private String add(Model model) {
 		model.addAttribute("jabatan", new JabatanModel());
-		return "addJabatan";
+		return "add-jabatan";
 	}
 	
 	@RequestMapping(value = "/jabatan/tambah", method = RequestMethod.POST)
 	private String addJabatanSubmit(@ModelAttribute JabatanModel jabatan, Model model) {
 		jabatanService.addJabatan(jabatan);
 		model.addAttribute("jabatan", jabatan);
-		return "addJabatan-sukses";
+		return "add-jabatan-sukses";
 	}
 	
 	@RequestMapping(value = "/jabatan/view", method = RequestMethod.GET)

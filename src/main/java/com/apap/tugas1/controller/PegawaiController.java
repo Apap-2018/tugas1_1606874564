@@ -13,6 +13,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -54,27 +55,34 @@ public class PegawaiController {
 	
 	@RequestMapping(value = "/pegawai/tambah", method = RequestMethod.GET)
 	private String add(Model model) {
+		PegawaiModel pegawai = new PegawaiModel();
+		if(pegawai.getListOfJabatan() == null) {
+			pegawai.setListOfJabatan(new ArrayList<JabatanModel>());
+		}
+		
+		pegawai.getListOfJabatan().add(new JabatanModel());
 		List<JabatanModel> listJabatan = jabatanService.getAllDetailJabatan();
-		List<InstansiModel> listInstansi = instansiService.getAllInstansiDetail();
 		List<ProvinsiModel> listProvinsi = provinsiService.getAllDetailProvinsi();
-		model.addAttribute("listPegawai", new PegawaiModel());
-		model.addAttribute("jabatan", listJabatan);
-		model.addAttribute("listInstansi", listInstansi);
+		
+		model.addAttribute("pegawai", pegawai);
+		model.addAttribute("listOfJabatan", listJabatan);
 		model.addAttribute("listProvinsi", listProvinsi);
 		return "add-pegawai";
 	}
 	
 	@RequestMapping(value = "/pegawai/tambah", method = RequestMethod.POST, params={"addRow"})
-	private String addRow(@ModelAttribute PegawaiModel pegawai, Model model) {
+	private String addRow(@ModelAttribute PegawaiModel pegawai, Model model, BindingResult bindingResult) {
+		
 		if(pegawai.getListOfJabatan() == null) {
-			pegawai.setListOfJabatan(new HashSet<>());
+			pegawai.setListOfJabatan(new ArrayList<>());
 		}
+		
 		pegawai.getListOfJabatan().add(new JabatanModel());
-		List<JabatanModel> jabatans = jabatanService.getAllDetailJabatan();
+		List<JabatanModel> jabatan = jabatanService.getAllDetailJabatan();
 		List<ProvinsiModel> provinsi = provinsiService.getAllDetailProvinsi();
 		
 		model.addAttribute("pegawai", pegawai);
-		model.addAttribute("listJabatan", jabatans);
+		model.addAttribute("listOfJabatan", jabatan);
 		model.addAttribute("listProvinsi", provinsi);
 		return "add-pegawai";
 	}
@@ -85,9 +93,11 @@ public class PegawaiController {
 		return getProv.getListInstansi();
 	}
 	
-	@RequestMapping(value = "/pegawai/tambah", method = RequestMethod.POST, params= {"submit"})
+	@RequestMapping(value = "/pegawai/tambah", method = RequestMethod.POST, params= {"save"})
 	private String addRowSubmit(@ModelAttribute PegawaiModel pegawai, Model model) {
+		System.out.println("MASUK ADDROWSUBMIT");
 		String nip = generateNip(pegawai);
+		System.out.println(nip);
 		pegawai.setNip(nip);
 		pegawaiService.addPegawai(pegawai);
 		model.addAttribute("nip", nip);
@@ -98,7 +108,7 @@ public class PegawaiController {
 	@RequestMapping(value = "/pegawai", method = RequestMethod.GET)
 	private String viewPegawai(@RequestParam("nip") String nip, Model model) {
 		PegawaiModel pegawai = pegawaiService.getPegawaiDetailByNip(nip);
-		Set<JabatanModel> listJabatan = pegawai.getListOfJabatan();
+		List<JabatanModel> listJabatan = pegawai.getListOfJabatan();
 		double count = 0;
 		ProvinsiModel provinsi = pegawai.getInstansi().getProvinsi();
 		for(JabatanModel jabatan:listJabatan) {

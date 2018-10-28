@@ -31,7 +31,7 @@ public class JabatanModel implements Serializable{
 	@Column(name = "gaji_pokok", nullable = false)
 	private double gaji_pokok;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "listOfJabatan")
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "listJabatan")
 	private Set<PegawaiModel> pegawaiJabatan = new HashSet();
 
 	public long getId() {

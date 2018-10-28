@@ -55,9 +55,9 @@ public class PegawaiModel implements Serializable {
 	@JsonIgnore
 	private InstansiModel instansi;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "jabatan_pegawai", joinColumns = {@JoinColumn(name = "id_pegawai")}, inverseJoinColumns = {@JoinColumn(name = "id_jabatan")})
-	private Set<JabatanModel> listOfJabatan = new HashSet();
+	private List<JabatanModel> listJabatan;
 
 	public long getId() {
 		return id;
@@ -115,16 +115,12 @@ public class PegawaiModel implements Serializable {
 		this.instansi = instansi;
 	}
 
-	public Set<JabatanModel> getListOfJabatan() {
-		return listOfJabatan;
+	public List<JabatanModel> getListOfJabatan() {
+		return listJabatan;
 	}
 
-	public void setListOfJabatan(Set<JabatanModel> listOfJabatan) {
-		this.listOfJabatan = listOfJabatan;
+	public void setListOfJabatan(List<JabatanModel> listJabatan) {
+		this.listJabatan = listJabatan;
 	}
 
-	
-	
-	
-	
 }
