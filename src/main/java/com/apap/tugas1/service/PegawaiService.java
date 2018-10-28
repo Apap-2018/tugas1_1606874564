@@ -11,4 +11,5 @@ public interface PegawaiService {
 	List<PegawaiModel> getAllDetailPegawai();
 	void addPegawai(PegawaiModel pegawai);
 	void deletePegawai(Long id);
+	void updatePegawai(PegawaiModel pegawai, Long id);
 }

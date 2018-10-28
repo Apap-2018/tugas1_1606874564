@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -72,12 +73,25 @@ public class PegawaiController {
 	
 	@RequestMapping(value = "/pegawai/tambah", method = RequestMethod.POST, params={"addRow"})
 	private String addRow(@ModelAttribute PegawaiModel pegawai, Model model, BindingResult bindingResult) {
-		
 		if(pegawai.getListOfJabatan() == null) {
 			pegawai.setListOfJabatan(new ArrayList<>());
 		}
 		
 		pegawai.getListOfJabatan().add(new JabatanModel());
+		List<JabatanModel> jabatan = jabatanService.getAllDetailJabatan();
+		List<ProvinsiModel> provinsi = provinsiService.getAllDetailProvinsi();
+		
+		model.addAttribute("pegawai", pegawai);
+		model.addAttribute("listOfJabatan", jabatan);
+		model.addAttribute("listProvinsi", provinsi);
+		return "add-pegawai";
+	}
+	
+	@RequestMapping(value = "/pegawai/tambah", method = RequestMethod.POST, params={"deleteRow"})
+	private String removeRow(@ModelAttribute PegawaiModel pegawai, Model model, HttpServletRequest req, BindingResult bindingResult) {
+		int index = Integer.parseInt(req.getParameter("deleteRow"));
+		pegawai.getListOfJabatan().remove(index);
+		
 		List<JabatanModel> jabatan = jabatanService.getAllDetailJabatan();
 		List<ProvinsiModel> provinsi = provinsiService.getAllDetailProvinsi();
 		
@@ -95,15 +109,51 @@ public class PegawaiController {
 	
 	@RequestMapping(value = "/pegawai/tambah", method = RequestMethod.POST, params= {"save"})
 	private String addRowSubmit(@ModelAttribute PegawaiModel pegawai, Model model) {
-		System.out.println("MASUK ADDROWSUBMIT");
 		String nip = generateNip(pegawai);
-		System.out.println(nip);
+		//System.out.println(nip);
 		pegawai.setNip(nip);
 		pegawaiService.addPegawai(pegawai);
 		model.addAttribute("nip", nip);
 		return "add";
 	}
 	
+	@RequestMapping(value = "/pegawai/ubah", method = RequestMethod.GET)
+	private String ubahPegawai(@RequestParam String nip, Model model) {
+		PegawaiModel pegawai = pegawaiService.getPegawaiDetailByNip(nip);
+		List<JabatanModel> listJabatan = jabatanService.getAllDetailJabatan();
+		List<ProvinsiModel> listProvinsi = provinsiService.getAllDetailProvinsi();
+		
+		model.addAttribute("pegawai", pegawai);
+		model.addAttribute("listOfJabatan", listJabatan);
+		model.addAttribute("listProvinsi", listProvinsi);
+		return "ubah-pegawai";
+	}
+	
+	@RequestMapping(value = "/pegawai/ubah", method = RequestMethod.POST, params= {"addRow"})
+	private String addRowUbahPegawai(@ModelAttribute PegawaiModel pegawai, Model model, BindingResult bindingResult) {
+		if(pegawai.getListOfJabatan() == null) {
+			pegawai.setListOfJabatan(new ArrayList<>());
+		}
+		
+		pegawai.getListOfJabatan().add(new JabatanModel());
+		List<JabatanModel> jabatan = jabatanService.getAllDetailJabatan();
+		List<ProvinsiModel> provinsi = provinsiService.getAllDetailProvinsi();
+		
+		model.addAttribute("pegawai", pegawai);
+		model.addAttribute("listOfJabatan", jabatan);
+		model.addAttribute("listProvinsi", provinsi);
+		return "ubah-pegawai";
+	}
+	
+	@RequestMapping(value = "/pegawai/ubah", method = RequestMethod.POST, params= {"save"})
+	private String ubahPegawaiSubmit(@ModelAttribute PegawaiModel pegawai, Model model) {
+		String nipBaru = generateNip(pegawai);
+		pegawai.setNip(nipBaru);
+		pegawaiService.updatePegawai(pegawai, pegawai.getId());
+		model.addAttribute("pegawai", pegawai);
+		model.addAttribute("nipBaru", nipBaru);
+		return "ubah-pegawai-sukses";
+	}
 	
 	@RequestMapping(value = "/pegawai", method = RequestMethod.GET)
 	private String viewPegawai(@RequestParam("nip") String nip, Model model) {
@@ -121,6 +171,7 @@ public class PegawaiController {
 		model.addAttribute("pegawai", pegawai);
 		model.addAttribute("listJabatan", listJabatan);
 		model.addAttribute("gaji", gaji);
+		model.addAttribute("nip", nip);
 		return "view-pegawai";
 	}
 	
@@ -168,7 +219,6 @@ public class PegawaiController {
 		}
 		
 		String nipAkhir = kodeInstansi + strDate + tahunMasuk + finalAkhir;
-		System.out.println(nipAkhir);
 		return nipAkhir;
 	}
 	

@@ -11,8 +11,9 @@
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 	<div style="margin-left:7px; margin-top:7px">
-		<h3>Tambah Pegawai</h3>
-		<form th:action="@{/pegawai/tambah}" th:object="${pegawai}" method="POST">
+		<h3>Ubah Pegawai</h3>
+		<form th:action="@{/pegawai/ubah}" th:object="${pegawai}" method="POST">
+		<input type="hidden" name = "id" th:value="${pegawai.id}"/>
 			<table>
 				<tr style="margin-top:10px">
 					<td>Nama</td>

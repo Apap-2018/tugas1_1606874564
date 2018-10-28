@@ -26,21 +26,20 @@
 				<p>Gaji</p>
 			</div>
 		
-		<div class="column">
-			<p th:text= "${pegawai.nip}"></p>
-			<p th:text= "${pegawai.nama}"></p>
-			<p th:text= "${pegawai.tempat_lahir}"></p>
-			<p th:text= "${pegawai.tanggal_lahir}"></p>
-			<p th:text= "${pegawai.tahun_masuk}"></p>
-			<p th:text= "${pegawai.instansi.nama} + ' - ' + ${pegawai.instansi.provinsi.nama}"></p>
-			<ul th:each="jabatan,iterationStatus : *{listJabatan}">
-				<li th:text="${jabatan.nama}"></li>				
-			</ul>
-			<p th:text="'Rp. ' + ${gaji}"></p>
-		
+			<div class="column">
+				<p th:text= "${pegawai.nip}"></p>
+				<p th:text= "${pegawai.nama}"></p>
+				<p th:text= "${pegawai.tempat_lahir}"></p>
+				<p th:text= "${pegawai.tanggal_lahir}"></p>
+				<p th:text= "${pegawai.tahun_masuk}"></p>
+				<p th:text= "${pegawai.instansi.nama} + ' - ' + ${pegawai.instansi.provinsi.nama}"></p>
+				<ul th:each="jabatan,iterationStatus : *{listJabatan}">
+					<li th:text="${jabatan.nama}"></li>				
+				</ul>
+				<p th:text="'Rp. ' + ${gaji}"></p>
+			</div>
 		</div>
-		</div>
-		
+		<a th:href="@{/pegawai/ubah}+'?nip='+${pegawai.getNip()}" class="btn btn-primary">Ubah</a>
 	</div>
 </body>
 
