@@ -13,10 +13,12 @@
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 	<div style="margin-left:5px; margin-top:4px">
 		<h3>Sukses!</h3>
-		<p>Data jabatan berhasil diubah!</p>
+		<p>Jabatan <a th:text="${jabatan.nama}"></a> berhasil ditambahkan</p>
 		<br>
 		<a th:href="@{/}"><button type="submit" class="btn btn-primary">Kembali</button></a>
 	</div>
+	
 </body>
 
 </html>
+

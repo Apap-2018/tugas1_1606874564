@@ -11,8 +11,11 @@
 
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
-	<h2>Jabatan berhasil dihapus!</h2>
-	<a th:href="@{/}">Kembali</a>
+	
+	<div style="margin-left:5px; margin-top:2px">
+		<h2>Jabatan <a th:text="${nama}"></a> berhasil dihapus!</h2>
+		<a th:href="@{/}"><button type="submit" class="btn btn-primary">Kembali</button></a>
+	</div>
 </body>
 
 </html>

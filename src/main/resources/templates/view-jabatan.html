@@ -9,18 +9,26 @@
 
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
-	
-	<h3 th:text="'Detail Jabatan ' + ${jabatan.nama}"></h3>
-	<p th:text= "'Nama: ' + ${jabatan.nama}"></p>
-	<p th:text= "'Deskripsi: ' + ${jabatan.deskripsi}"></p>
-	<p th:text= "'Gaji Pokok: ' + ${jabatan.gaji_pokok}"></p>
-	
-	<div class="card-body">
-        <div style="float:left; clear:none; margin-right: 10px">
-         	<a th:href="@{/jabatan/ubah}+'?idJabatan='+${jabatan.getId()}" class="btn btn-primary">Ubah</a>
-         	<a th:href="@{/jabatan/hapus}+'?idJabatan='+${jabatan.getId()}" class="btn btn-primary">Hapus</a>
-        </div>
+	<div style="margin-left:7px; margin-top:7px">
+		<h3 th:text="'Detail Jabatan ' + ${jabatan.nama}"></h3>
+		<div class="row" style="margin-left:10px">
+			<div class="column" style="margin-right:15px">
+				<p>Nama</p>
+				<p>Deksripsi</p>
+				<p>Gaji Pokok</p>
+			</div>
+			
+			<div class="column">
+				<p th:text="${jabatan.nama}"></p>
+				<p th:text="${jabatan.deskripsi}"></p>
+				<p th:text="${jabatan.gaji_pokok}"></p>
+			</div>
+    		
+		</div>
+		<a th:href="@{/jabatan/ubah}+'?idJabatan='+${jabatan.getId()}" class="btn btn-primary">Ubah</a>
+    	<a th:href="@{/jabatan/hapus}+'?idJabatan='+${jabatan.getId()}" class="btn btn-primary">Hapus</a>
     </div>
+    <br>
     
 </body>
 

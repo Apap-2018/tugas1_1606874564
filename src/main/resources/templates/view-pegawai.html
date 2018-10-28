@@ -9,21 +9,39 @@
 
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
-	
-	<h3 th:text="'Lihat Data Pegawai - ' + ${pegawai.nip}"></h3>
-	<p th:text= "'NIP: ' + ${pegawai.nip}"></p>
-	<p th:text= "'Nama: ' + ${pegawai.nama}"></p>
-	<p th:text= "'Tempat Lahir: ' + ${pegawai.tempat_lahir}"></p>
-	<p th:text= "'Tanggal Lahir: ' + ${pegawai.tanggal_lahir}"></p>
-	<p th:text= "'Tahun Masuk: ' + ${pegawai.tahun_masuk}"></p>
-	<p th:text= "'Nama Instansi: ' + ${pegawai.instansi.nama}"></p>
-	<p>Jabatan : </p>
-	<tr th:each="jabatan,iterationStatus : *{listJabatan}">
-		<td th:text="${jabatan.nama}"></td>				
-	</tr>
-	
-	<p th:text="'Gaji: ' + ${gaji}"></p>
-
+	<div style="margin-left:10px; margin-top:4px">
+		<h3 th:text="'Lihat Data Pegawai - ' + ${pegawai.nip}"></h3>
+		<div class="row" style="margin-left:10px">
+			<div class="column" style="margin-right:15px">
+				<p>NIP</p>
+				<p>Nama</p>
+				<p>Tempat Lahir</p>
+				<p>Tanggal Lahir</p>
+				<p>Tahun Masuk</p>
+				<p>Nama Instansi</p>
+				<ul th:each="jabatan, iterationStatus:*{listJabatan}" class="list-unstyled">
+					<li th:if="${iterationStatus.index}==0" >Jabatan</li>
+					<li th:unless="${iterationStatus.index}==0"><br></li>
+				</ul>
+				<p>Gaji</p>
+			</div>
+		
+		<div class="column">
+			<p th:text= "${pegawai.nip}"></p>
+			<p th:text= "${pegawai.nama}"></p>
+			<p th:text= "${pegawai.tempat_lahir}"></p>
+			<p th:text= "${pegawai.tanggal_lahir}"></p>
+			<p th:text= "${pegawai.tahun_masuk}"></p>
+			<p th:text= "${pegawai.instansi.nama} + ' - ' + ${pegawai.instansi.provinsi.nama}"></p>
+			<ul th:each="jabatan,iterationStatus : *{listJabatan}">
+				<li th:text="${jabatan.nama}"></li>				
+			</ul>
+			<p th:text="'Rp. ' + ${gaji}"></p>
+		
+		</div>
+		</div>
+		
+	</div>
 </body>
 
 </html>

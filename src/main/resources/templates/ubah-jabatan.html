@@ -15,16 +15,26 @@
  
 	<h3>Ubah Jabatan</h3>
 	<form th:action="@{/jabatan/ubah}" th:object="${jabatan}" method="POST">
-		<input type="hidden" name="id" th:value="${jabatan.id}"/>
-		Nama: <br>
- 		<input type="text" name="nama" th:value="${jabatan.nama}"/>
- 		<br>
- 		Deskripsi: <br>
- 		<input type="text" name="deskripsi" th:value="${jabatan.deskripsi}"/>
- 		<br>
- 		Gaji Pokok <br>
- 		<input type="number" name="gaji_pokok" th:value="${jabatan.gaji_pokok}"/>
- 		<br>
+	<input type="hidden" name = "id" th:value="${jabatan.id}"/>
+	<table>
+			<tr>
+				<td>Nama</td>
+				<td></td>
+				<td><input type="text" name="nama" maxlength="255" th:value="${jabatan.nama}" class="form-control" /></td>
+			</tr>
+			
+			<tr>
+				<td>Deskripsi</td>
+				<td></td>
+				<td><input type="text" name="deskripsi" maxlength="255" th:value="${jabatan.deskripsi}" class="form-control" /></td>
+			</tr>
+			
+			<tr>
+				<td>Gaji Pokok</td>
+				<td></td>
+				<td><input type="number" name="gaji_pokok" th:value="${jabatan.gaji_pokok}" class="form-control" /></td>
+			</tr>
+		</table>
   		<button type="submit">Simpan</button>
  	</form>
  	

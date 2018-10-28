@@ -11,12 +11,14 @@
 
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
-	<div class="container-fluid">
+	<div class="container-fluid" style="margin-top:5px">
 		<h3>Sistem Informasi Kepegawaian</h3>
 		<h4>Selamat datang di Sistem Informasi Kepegawaian</h4>
-		<br>
+		
+		<hr>
+		
 		<h2>Lihat Data Pegawai berdasarkan NIP</h2>
-		<h4>Masukkan Nomor Induk Pegawai</h4>
+		<h5>Masukkan Nomor Induk Pegawai</h5>
 		<div class="row">
 			<div class="col-md-6">
 				<div class="card">
@@ -32,11 +34,11 @@
 				</div>
 			</div>
 		</div>
-		
 		<br>
+		<hr>
 		
 		<h2>Lihat Detail Jabatan</h2>
-		<h4>Pilih Jabatan</h4>
+		<h5>Pilih Jabatan</h5>
 		<div class="row">
 			<div class="col-md-6">
 				<div class="card">
@@ -44,7 +46,7 @@
 						<div class="card-body">
 							<div class="form-group blu-margin">
     							<select class="form-control" id="idJabatan" name="idJabatan">
-        							<option value="" th:field="*{jabatan}"></option>
+        							<option disabled="disabled" selected="selected">Nama Jabatan</option>
         							<option th:each="jabatan : ${jabatan}" th:value="${jabatan.id}" th:text="${jabatan.nama}"></option>
     							</select>
 							</div>
@@ -56,8 +58,11 @@
 			</div>
 		</div>
 		
+		<br>
+		<hr>
+		
 		<h2>Lihat Pegawai Termuda dan Tertua</h2>
-		<h4>Pilih Instansi</h4>
+		<h5>Pilih Instansi</h5>
 		<div class="row">
 			<div class="col-md-6">
 				<div class="card">
@@ -65,8 +70,8 @@
 						<div class="card-body">
 							<div class="form-group blu-margin">
     							<select class="form-control" id="idInstansi" name="idInstansi">
-        							<option value="" th:field="*{instansi}"></option>
-        							<option th:each="instansi : ${instansi}" th:value="${instansi.id}" th:text="${instansi.nama}"></option>
+    								<option disabled="disabled" selected="selected">Nama Instansi</option>
+        							<option th:each="instansi : ${instansi}" th:value="${instansi.id}" th:text="${instansi.nama} + ' - ' + ${instansi.provinsi.nama}"></option>
     							</select>
 							</div>
 							<br>

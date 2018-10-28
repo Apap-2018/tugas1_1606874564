@@ -22,7 +22,7 @@ public class ProvinsiModel implements Serializable {
 	@NotNull
 	@Size(max = 10)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private long id;
 	
 	@NotNull
 	@Size(max = 225)
@@ -36,7 +36,7 @@ public class ProvinsiModel implements Serializable {
 	@OneToMany(mappedBy = "provinsi", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<InstansiModel> listInstansi;
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 

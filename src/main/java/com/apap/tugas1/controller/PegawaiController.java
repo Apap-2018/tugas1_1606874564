@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.apap.tugas1.model.InstansiModel;
 import com.apap.tugas1.model.JabatanModel;
@@ -56,16 +57,15 @@ public class PegawaiController {
 		List<JabatanModel> listJabatan = jabatanService.getAllDetailJabatan();
 		List<InstansiModel> listInstansi = instansiService.getAllInstansiDetail();
 		List<ProvinsiModel> listProvinsi = provinsiService.getAllDetailProvinsi();
-		model.addAttribute("pegawai", new PegawaiModel());
+		model.addAttribute("listPegawai", new PegawaiModel());
 		model.addAttribute("jabatan", listJabatan);
-		model.addAttribute("instansi", instansiService);
-		model.addAttribute("provinsiList", provinsiService);
+		model.addAttribute("listInstansi", listInstansi);
+		model.addAttribute("listProvinsi", listProvinsi);
 		return "add-pegawai";
 	}
 	
 	@RequestMapping(value = "/pegawai/tambah", method = RequestMethod.POST, params={"addRow"})
 	private String addRow(@ModelAttribute PegawaiModel pegawai, Model model) {
-		System.out.println("!!!!!!!!!!!!!! MASUKKKKK !!!!!!!!!!!!!!");
 		if(pegawai.getListOfJabatan() == null) {
 			pegawai.setListOfJabatan(new HashSet<>());
 		}
@@ -74,9 +74,15 @@ public class PegawaiController {
 		List<ProvinsiModel> provinsi = provinsiService.getAllDetailProvinsi();
 		
 		model.addAttribute("pegawai", pegawai);
-		model.addAttribute("jabatan", jabatans);
-		model.addAttribute("provinsi", provinsi);
+		model.addAttribute("listJabatan", jabatans);
+		model.addAttribute("listProvinsi", provinsi);
 		return "add-pegawai";
+	}
+	
+	@RequestMapping(value = "/pegawai/tambah/instansi", method = RequestMethod.GET)
+	private @ResponseBody List<InstansiModel> cekInstansi(@RequestParam(value="provinsiId") long provinsiId) {
+		ProvinsiModel getProv = provinsiService.getProvinsiDetailById(provinsiId).get();
+		return getProv.getListInstansi();
 	}
 	
 	@RequestMapping(value = "/pegawai/tambah", method = RequestMethod.POST, params= {"submit"})

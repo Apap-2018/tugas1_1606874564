@@ -11,6 +11,7 @@
 
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
+	<div style="margin-left:7px; margin-top:7px">
 	<h2>Lihat Semua Jabatan</h2>
 	<div class="table-responsive">
   	<table class="table">
@@ -30,6 +31,7 @@
 	</tbody>
 	</table>
 	</div>
-	<td><a th:href="@{/}">Kembali</a></td>
+	<td><a th:href="@{/}"><button type="submit" class="btn btn-primary">Kembali</button></a></td>
+	</div>
 </body>
 </html>

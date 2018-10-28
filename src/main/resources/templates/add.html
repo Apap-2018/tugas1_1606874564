@@ -12,7 +12,7 @@
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 	<h2 th:text="'Pegawai dengan NIP ' + ${nip} + ' berhasil ditambahkan'" ></h2>
-	<a th:href="@{/}">Kembali</a>
+	<a th:href="@{/}"><button type="submit" class="btn btn-primary">Kembali</button></a>
 </body>
 
 </html>
