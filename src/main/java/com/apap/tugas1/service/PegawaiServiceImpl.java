@@ -3,6 +3,8 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.apap.tugas1.model.InstansiModel;
 import com.apap.tugas1.model.PegawaiModel;
 import com.apap.tugas1.repository.PegawaiDb;
 
@@ -49,5 +51,16 @@ public class PegawaiServiceImpl implements PegawaiService {
 		pegawaiUpdated.setInstansi(newPegawai.getInstansi());
 		pegawaiDb.save(pegawaiUpdated);
 	}
+
+	@Override
+	public List<PegawaiModel> getPegawaiDetailByInstansi(InstansiModel instansi) {
+		return pegawaiDb.findByInstansi(instansi);
+	}
+
+	@Override
+	public List<PegawaiModel> getPegawaiDetailByInstansiProvinsi(List<InstansiModel> listInstansi) {
+		return pegawaiDb.findByInstansiProvinsi(listInstansi);
+	}
+
 
 }

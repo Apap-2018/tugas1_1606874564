@@ -7,13 +7,19 @@
 	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
 	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
-	
+	<br>
+	<div class="row justify-content-center">
+		<h3>Lihat Jumlah Pegawai</h3>
+		<br><br>
+		</div>
 	<div class="table-responsive">
-  	<table class="table">
+  	<table class="table" id="myTable">
     	<thead>
       		<tr>
         		<th scope="col">Jabatan</th>
@@ -29,7 +35,13 @@
 	</table>
 	</div>
 	
-	<td><a th:href="@{/}">Kembali</a></td>
+	<td><a th:href="@{/}"><button type="submit" class="btn btn-primary">Kembali</button></a></td>
 </body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#myTable').DataTable();
+	});
+
+</script>
 
 </html>

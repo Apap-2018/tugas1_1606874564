@@ -25,4 +25,5 @@ public class ProvinsiServiceImpl implements ProvinsiService{
 		return provinsiDb.findById(id);
 	}
 
+
 }

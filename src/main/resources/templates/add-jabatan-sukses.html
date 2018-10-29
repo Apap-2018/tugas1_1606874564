@@ -13,9 +13,9 @@
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 	<div style="margin-left:5px; margin-top:4px">
 		<h3>Sukses!</h3>
-		<p>Jabatan <a th:text="${jabatan.nama}"></a> berhasil ditambahkan</p>
+		<h5>Jabatan <a th:text="${jabatan.nama}"></a> berhasil ditambahkan</h5>
 		<br>
-		<a th:href="@{/}"><button type="submit" class="btn btn-primary">Kembali</button></a>
+		<a th:href="@{/}"><button type="submit" class="btn btn-info">Kembali</button></a>
 	</div>
 	
 </body>

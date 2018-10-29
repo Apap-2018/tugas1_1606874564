@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<object th:include="fragments/fragment :: title" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	
+</head>
+
+<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+	<br>
+	<div style="margin-left:2rem;padding-right:2rem;margin-top:3rem;">
+		<h4>Cari Pegawai</h4>
+		<form th:action="@{/pegawai/cari}" method="GET">
+			<table>
+				<tr style="height:3rem">
+					<td style="width:10rem">Provinsi</td>
+					<td>
+						<select class="form-control" th:name="idProvinsi" id="provinsi">
+						<option selected="selected" th:value="0">Pilih Provinsi</option>
+					    	<option th:each="provinsi : ${allProvinsi}" th:value="${provinsi.id}" th:text="${provinsi.nama}"></option>
+					    </select>
+					</td>
+				</tr>
+				<tr style="height:3rem">
+					<td>Nama Instansi</td>
+					<td>
+						<select class="form-control" th:name="idInstansi" id="instansi">
+							<option selected="selected" th:value="0">Pilih Instansi</option>
+					    	<option th:each="instansi : ${allInstansi}" th:value="${instansi.id}" th:text="${instansi.nama}"></option>
+					    </select>
+					</td>
+				</tr>
+				<tr style="height:3rem">
+					<td>Jabatan</td>
+					<td>
+						<select class="form-control" th:name="idJabatan">
+							<option selected="selected" th:value="0">Pilih Jabatan</option>
+					    	<option th:each="jabatan : ${allJabatan}" th:value="${jabatan.id}" th:text="${jabatan.nama}"></option>
+					    </select>   
+					</td>
+				
+				</tr>
+			</table>
+			<br>
+			<button type="submit" class="btn btn-info">Cari</button>
+		</form>
+		<br>
+		<table class="table table-striped table-bordered table-sm display" id="myTable">
+			<thead>
+				<tr>
+					<th>No.</th>
+					<th>NIP</th>
+					<th>Nama</th>
+					<th>Tempat Lahir</th>
+					<th>Tanggal Lahir</th>
+					<th>Tahun Masuk</th>
+					<th>Nama Instansi</th>
+					<th>Jabatan</th>
+				</tr>
+			</thead>
+			<tr th:each="pegawai,iterationStatus : ${allPegawai}">
+				<td th:text="${iterationStatus.count}"></td>
+				<td th:text="${pegawai.nip}"></td>
+				<td th:text="${pegawai.nama}"></td>
+				<td th:text="${pegawai.tempat_lahir}"></td>
+				<td th:text="${pegawai.tanggal_lahir}"></td>
+				<td th:text="${pegawai.tahun_masuk}"></td>
+   				<td th:text="${pegawai.instansi.nama}"></td>
+   				<td>
+   					<span th:each="jabatan,iterationStatus : ${pegawai.getListOfJabatan()}">
+   						<a th:text="${iterationStatus.count}+'. '+${jabatan.nama}"></a><br>
+   					</span>
+   				</td>
+			</tr>
+		</table>
+	</div>
+	<br><br><br>
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#myTable').DataTable();
+		console.log("hey")
+		$('#provinsi').change(function() {
+			valueProv = $(this).val();
+			console.log(valueProv)
+			$.ajax({
+				type: "GET",
+				url: "http://localhost:8080/pegawai/tambah/instansi?provinsi=",
+				data: {
+					'provinsiId' : valueProv
+				},
+				dataType: 'json',
+				success: function(data) {
+					console.log(data);
+					getIns = '';
+					var size = data.length;
+				
+					for (var i = 0; i<size; i++) {
+						getIns+='<option value="'+data[i].id+'">'+data[i].nama+'</option>';
+						console.log(data[i]);
+						console.log(data[i].nama)
+					}
+					console.log(getIns);
+					$('#instansi').show();
+					$('#instansi').append(getIns);
+					$('#instansiAsli').remove();
+				},
+				error: function(rs,e) {
+					alert(rs.responseText)
+				}
+			})
+		
+		
+		})
+	});
+</script>
+</html>
